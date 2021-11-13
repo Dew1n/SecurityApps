@@ -4,6 +4,7 @@ import {injectable, /* inject, */ BindingScope} from '@loopback/core';
 export class AutenticacionesService {
   constructor(/* Add @inject to inject parameters */) {}
 
+  
   /*
    * Add service methods here
    */

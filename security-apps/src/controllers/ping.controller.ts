@@ -7,6 +7,7 @@ import {
   ResponseObject,
 } from '@loopback/rest';
 
+
 /**
  * OpenAPI response for ping()
  */
