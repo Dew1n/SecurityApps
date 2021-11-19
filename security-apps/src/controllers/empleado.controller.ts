@@ -1,3 +1,4 @@
+import { service } from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -19,6 +20,7 @@ import {
 } from '@loopback/rest';
 import {Empleado} from '../models';
 import {EmpleadoRepository} from '../repositories';
+import { NotificacionesService } from '../services';
 
 export class EmpleadoController {
   constructor(
