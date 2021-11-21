@@ -48,7 +48,7 @@ export class ClienteController {
     })
     cliente: Omit<Cliente, 'id'>,
   ): Promise<Cliente> {
-    this.ServicioNotificaciones.EnviarNotificacionesSMS(cliente.telefono);
+    //this.ServicioNotificaciones.EnviarNotificacionesSMS(cliente.telefono);
     return this.clienteRepository.create(cliente);
   }
 

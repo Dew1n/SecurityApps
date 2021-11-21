@@ -10,7 +10,7 @@ export class NotificacionesService {
    * Servicio de mensajeria Twilio
    */
   
-  EnviarNotificacionesSMS(celular:String): void {
+  EnviarNotificacionesSMS(celular:String, mensaje:String): void {
     const accountSid = 'ACf178c2606b24aa9f9d6009021bb3b281'; // Your Account SID from www.twilio.com/console
     const authToken = '9d71685e2871b7762cfdd23e0ec41a3a'; // Your Auth Token from www.twilio.com/console
 
@@ -19,7 +19,7 @@ export class NotificacionesService {
 
     client.messages
       .create({
-        body: "Prueba 1",
+        body: mensaje,
         to: '+57'+ celular, // Text this number
         from: '+18022101179', // From a valid Twilio number
       })

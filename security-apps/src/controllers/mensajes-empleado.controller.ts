@@ -56,7 +56,7 @@ export class MensajesEmpleadoController {
     console.log(p);
     let persona = await this.empleadoRepository.findById(p.empleadoId)
     console.log(persona);
-    this.ServicioNotificaciones.EnviarNotificacionesSMS(persona.telefono);
+    this.ServicioNotificaciones.EnviarNotificacionesSMS(persona.telefono, p.Mensaje);
     return this.mensajesEmpleadosRepository.create(mensajesEmpleados);
   }
 
