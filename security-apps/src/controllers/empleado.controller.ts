@@ -17,8 +17,9 @@ import {
   del,
   requestBody,
   response,
+  HttpErrors,
 } from '@loopback/rest';
-import {Empleado} from '../models';
+import {Credenciales, Empleado} from '../models';
 import {EmpleadoRepository} from '../repositories';
 import { AutenticacionesService, NotificacionesService } from '../services';
 const fetch = require("node-fetch");
@@ -32,6 +33,32 @@ export class EmpleadoController {
     @service(AutenticacionesService)
     public servicioAutenticaciones: AutenticacionesService
   ) {}
+  
+  @post("/loginEmpleado", {
+    responses: {
+      '200': {
+        description: "Identificacion de usuarios"
+      }
+    }
+  })
+  async identificarEmpleado(
+    @requestBody() Credenciales: Credenciales
+  ){
+    let p = await this.servicioAutenticaciones.IdentificarEmpleado(Credenciales.usuario, Credenciales.clave);
+    if (p){
+      let token = this.servicioAutenticaciones.GenerarTokenJWT(p);
+      return{
+        datos: {
+          nombre: p.nombres,
+          email: p.email,
+          id: p.id
+        },
+        tk: token
+      }
+    }else {
+      throw new HttpErrors[401]("Datos invalidos");
+    }
+  }
 
   @post('/empleados')
   @response(200, {
@@ -59,7 +86,7 @@ export class EmpleadoController {
     //Notificar al usuario
     let destino = empleado.telefono;
     let asunto = 'Registro en la plataforma';
-    let contenido = `${asunto} - Hola ${empleado.nombres}, su nombre de usuario es: ${empleado.email} y su contraseña es: ${clave}`;
+    let contenido = `${asunto} - Hola ${empleado.nombres} ${empleado.apellidos}, su nombre de usuario es: ${empleado.email} y su contraseña es: ${clave}`;
     this.ServicioNotificaciones.EnviarNotificacionesSMS(destino, contenido);
       return p;
   }

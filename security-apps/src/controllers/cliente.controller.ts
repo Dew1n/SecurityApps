@@ -1,3 +1,4 @@
+import { authenticate } from '@loopback/authentication';
 import { service } from '@loopback/core';
 import {
   Count,
@@ -22,6 +23,7 @@ import {Cliente} from '../models';
 import {ClienteRepository} from '../repositories';
 import { NotificacionesService } from '../services';
 
+@authenticate("admin")
 export class ClienteController {
   constructor(
     @repository(ClienteRepository)
@@ -29,7 +31,7 @@ export class ClienteController {
     @service(NotificacionesService)
     public ServicioNotificaciones : NotificacionesService,
   ) {}
-
+  
   @post('/clientes')
   @response(200, {
     description: 'Cliente model instance',
