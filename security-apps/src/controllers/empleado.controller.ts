@@ -1,3 +1,4 @@
+import { authenticate } from '@loopback/authentication';
 import { service } from '@loopback/core';
 import {
   Count,
@@ -24,6 +25,7 @@ import {EmpleadoRepository} from '../repositories';
 import { AutenticacionesService, NotificacionesService } from '../services';
 const fetch = require("node-fetch");
 
+@authenticate("admin")
 export class EmpleadoController {
   constructor(
     @repository(EmpleadoRepository)
@@ -33,7 +35,7 @@ export class EmpleadoController {
     @service(AutenticacionesService)
     public servicioAutenticaciones: AutenticacionesService
   ) {}
-  
+  @authenticate.skip()
   @post("/loginEmpleado", {
     responses: {
       '200': {
@@ -90,7 +92,7 @@ export class EmpleadoController {
     this.ServicioNotificaciones.EnviarNotificacionesSMS(destino, contenido);
       return p;
   }
-
+  @authenticate.skip()
   @get('/empleados/count')
   @response(200, {
     description: 'Empleado model count',
@@ -101,7 +103,7 @@ export class EmpleadoController {
   ): Promise<Count> {
     return this.empleadoRepository.count(where);
   }
-
+  @authenticate.skip()
   @get('/empleados')
   @response(200, {
     description: 'Array of Empleado model instances',
@@ -138,7 +140,7 @@ export class EmpleadoController {
   ): Promise<Count> {
     return this.empleadoRepository.updateAll(empleado, where);
   }
-
+  @authenticate.skip()
   @get('/empleados/{id}')
   @response(200, {
     description: 'Empleado model instance',

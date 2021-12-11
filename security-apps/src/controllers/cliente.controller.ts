@@ -53,7 +53,7 @@ export class ClienteController {
     //this.ServicioNotificaciones.EnviarNotificacionesSMS(cliente.telefono);
     return this.clienteRepository.create(cliente);
   }
-
+  @authenticate.skip()
   @get('/clientes/count')
   @response(200, {
     description: 'Cliente model count',
@@ -64,7 +64,7 @@ export class ClienteController {
   ): Promise<Count> {
     return this.clienteRepository.count(where);
   }
-
+  @authenticate.skip()
   @get('/clientes')
   @response(200, {
     description: 'Array of Cliente model instances',
@@ -101,7 +101,7 @@ export class ClienteController {
   ): Promise<Count> {
     return this.clienteRepository.updateAll(cliente, where);
   }
-
+  @authenticate.skip()
   @get('/clientes/{id}')
   @response(200, {
     description: 'Cliente model instance',

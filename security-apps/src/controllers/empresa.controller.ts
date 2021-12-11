@@ -1,3 +1,4 @@
+import { authenticate } from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -20,6 +21,7 @@ import {
 import {Empresa} from '../models';
 import {EmpresaRepository} from '../repositories';
 
+@authenticate("admin")
 export class EmpresaController {
   constructor(
     @repository(EmpresaRepository)
@@ -46,7 +48,7 @@ export class EmpresaController {
   ): Promise<Empresa> {
     return this.empresaRepository.create(empresa);
   }
-
+  @authenticate.skip()
   @get('/empresas/count')
   @response(200, {
     description: 'Empresa model count',
@@ -57,7 +59,7 @@ export class EmpresaController {
   ): Promise<Count> {
     return this.empresaRepository.count(where);
   }
-
+  @authenticate.skip()
   @get('/empresas')
   @response(200, {
     description: 'Array of Empresa model instances',
@@ -94,7 +96,7 @@ export class EmpresaController {
   ): Promise<Count> {
     return this.empresaRepository.updateAll(empresa, where);
   }
-
+  @authenticate.skip()
   @get('/empresas/{id}')
   @response(200, {
     description: 'Empresa model instance',
